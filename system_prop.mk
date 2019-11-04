@@ -14,4 +14,3 @@ PRODUCT_PROPERTY_OVERRIDES += \
 # Radio
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.telephony.default_network=10
-

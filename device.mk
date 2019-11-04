@@ -62,3 +62,6 @@ PRODUCT_PACKAGES += \
 # RRO
 PRODUCT_ENFORCE_RRO_TARGETS := \
     framework-res
+
+# Disable Scudo to save RAM.
+PRODUCT_DISABLE_SCUDO := true
