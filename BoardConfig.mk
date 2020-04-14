@@ -23,6 +23,7 @@ DEVICE_PATH := device/motorola/harpia
 TARGET_OTA_ASSERT_DEVICE := harpia,harpia_retail
 
 # Camera
+TARGET_USES_NON_TREBLE_CAMERA := true
 TARGET_PROCESS_SDK_VERSION_OVERRIDE := \
 	/system/bin/mm-qcamera-daemon=25
 
