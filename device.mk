@@ -59,3 +59,8 @@ PRODUCT_PACKAGES += \
 # RRO
 PRODUCT_ENFORCE_RRO_TARGETS := \
     framework-res
+
+# Soong namespaces
+PRODUCT_SOONG_NAMESPACES += \
+    $(LOCAL_PATH)
+
