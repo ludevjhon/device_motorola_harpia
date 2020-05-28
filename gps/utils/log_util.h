@@ -1,4 +1,4 @@
-/* Copyright (c) 2011-2014 The Linux Foundation. All rights reserved.
+/* Copyright (c) 2011 The Linux Foundation. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -96,25 +96,37 @@ extern char* get_timestamp(char* str, unsigned long buf_size);
   if that value remains unchanged, it means gps.conf did not
   provide a value and we default to the initial value to use
   Android's logging levels*/
-#define IF_LOC_LOGE if((loc_logger.DEBUG_LEVEL >= 1) && (loc_logger.DEBUG_LEVEL <= 5))
-#define IF_LOC_LOGW if((loc_logger.DEBUG_LEVEL >= 2) && (loc_logger.DEBUG_LEVEL <= 5))
-#define IF_LOC_LOGI if((loc_logger.DEBUG_LEVEL >= 3) && (loc_logger.DEBUG_LEVEL <= 5))
-#define IF_LOC_LOGD if((loc_logger.DEBUG_LEVEL >= 4) && (loc_logger.DEBUG_LEVEL <= 5))
-#define IF_LOC_LOGV if((loc_logger.DEBUG_LEVEL >= 5) && (loc_logger.DEBUG_LEVEL <= 5))
+#define LOC_LOGE(...) \
+if ((loc_logger.DEBUG_LEVEL >= 1) && (loc_logger.DEBUG_LEVEL <= 5)) { ALOGE("W/" __VA_ARGS__); } \
+else if (loc_logger.DEBUG_LEVEL == 0xff) { ALOGE("W/" __VA_ARGS__); }
 
-#define LOC_LOGE(...) IF_LOC_LOGE { ALOGE(__VA_ARGS__); }
-#define LOC_LOGW(...) IF_LOC_LOGW { ALOGW(__VA_ARGS__); }
-#define LOC_LOGI(...) IF_LOC_LOGI { ALOGI(__VA_ARGS__); }
-#define LOC_LOGD(...) IF_LOC_LOGD { ALOGD(__VA_ARGS__); }
-#define LOC_LOGV(...) IF_LOC_LOGV { ALOGV(__VA_ARGS__); }
+#define LOC_LOGW(...) \
+if ((loc_logger.DEBUG_LEVEL >= 2) && (loc_logger.DEBUG_LEVEL <= 5)) { ALOGE("W/" __VA_ARGS__); }  \
+else if (loc_logger.DEBUG_LEVEL == 0xff) { ALOGW("W/" __VA_ARGS__); }
+
+#define LOC_LOGI(...) \
+if ((loc_logger.DEBUG_LEVEL >= 3) && (loc_logger.DEBUG_LEVEL <= 5)) { ALOGE("I/" __VA_ARGS__); }   \
+else if (loc_logger.DEBUG_LEVEL == 0xff) { ALOGI("I/" __VA_ARGS__); }
+
+#define LOC_LOGD(...) \
+if ((loc_logger.DEBUG_LEVEL >= 4) && (loc_logger.DEBUG_LEVEL <= 5)) { ALOGE("D/" __VA_ARGS__); }   \
+else if (loc_logger.DEBUG_LEVEL == 0xff) { ALOGD("D/" __VA_ARGS__); }
+
+#define LOC_LOGV(...) \
+if ((loc_logger.DEBUG_LEVEL >= 5) && (loc_logger.DEBUG_LEVEL <= 5)) { ALOGE("V/" __VA_ARGS__); }   \
+else if (loc_logger.DEBUG_LEVEL == 0xff) { ALOGV("V/" __VA_ARGS__); }
 
 #else /* DEBUG_DMN_LOC_API */
 
-#define LOC_LOGE(...) ALOGE(__VA_ARGS__)
-#define LOC_LOGW(...) ALOGW(__VA_ARGS__)
-#define LOC_LOGI(...) ALOGI(__VA_ARGS__)
-#define LOC_LOGD(...) ALOGD(__VA_ARGS__)
-#define LOC_LOGV(...) ALOGV(__VA_ARGS__)
+#define LOC_LOGE(...) ALOGE("E/" __VA_ARGS__)
+
+#define LOC_LOGW(...) ALOGW("W/" __VA_ARGS__)
+
+#define LOC_LOGI(...) ALOGI("I/" __VA_ARGS__)
+
+#define LOC_LOGD(...) ALOGD("D/" __VA_ARGS__)
+
+#define LOC_LOGV(...) ALOGV("V/" __VA_ARGS__)
 
 #endif /* DEBUG_DMN_LOC_API */
 
@@ -142,14 +154,15 @@ extern char* get_timestamp(char* str, unsigned long buf_size);
 #define ENTRY_LOG() LOG_V(ENTRY_TAG, __func__, %s, "")
 #define EXIT_LOG(SPEC, VAL) LOG_V(EXIT_TAG, __func__, SPEC, VAL)
 
+
 // Used for logging callflow from Android Framework
-#define ENTRY_LOG_CALLFLOW() LOG_V(FROM_AFW, __FUNCTION__, %s, "")
+#define ENTRY_LOG_CALLFLOW() LOG_I(FROM_AFW, __func__, %s, "")
 // Used for logging callflow to Modem
-#define EXIT_LOG_CALLFLOW(SPEC, VAL) LOG_V(TO_MODEM, __FUNCTION__, SPEC, VAL)
-// Used for logging callflow from Modem(TO_MODEM, __FUNCTION__, %s, "")
-#define MODEM_LOG_CALLFLOW(SPEC, VAL) LOG_V(FROM_MODEM, __FUNCTION__, SPEC, VAL)
+#define EXIT_LOG_CALLFLOW(SPEC, VAL) LOG_I(TO_MODEM, __func__, SPEC, VAL)
+// Used for logging callflow from Modem(TO_MODEM, __func__, %s, "")
+#define MODEM_LOG_CALLFLOW(SPEC, VAL) LOG_I(FROM_MODEM, __func__, SPEC, VAL)
 // Used for logging callflow to Android Framework
-#define CALLBACK_LOG_CALLFLOW(CB, SPEC, VAL) LOG_V(TO_AFW, CB, SPEC, VAL)
+#define CALLBACK_LOG_CALLFLOW(CB, SPEC, VAL) LOG_I(TO_AFW, CB, SPEC, VAL)
 
 #ifdef __cplusplus
 }

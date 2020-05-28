@@ -48,12 +48,13 @@ vendor/lib/librpmb.so
 vendor/lib/libssd.so
 
 # GPS
-etc/flp.conf
+bin/gpsone_daemon
+etc/gps.conf
+etc/izat.conf
+etc/quipc.conf
 etc/sap.conf
 lib/libloc_api_v02.so
 lib/libloc_ds_api.so
-vendor/lib/hw/flp.default.so
-vendor/lib/libflp.so
 vendor/lib/libgeofence.so
 vendor/lib/libizat_core.so
 vendor/lib/liblbs_core.so
