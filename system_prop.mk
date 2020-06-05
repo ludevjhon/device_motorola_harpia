@@ -15,6 +15,3 @@ PRODUCT_PROPERTY_OVERRIDES += \
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.telephony.default_network=10
 
-# UI
-PRODUCT_PROPERTY_OVERRIDES += \
-    sys.use_fifo_ui=1
