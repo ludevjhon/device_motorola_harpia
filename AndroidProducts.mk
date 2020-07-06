@@ -14,7 +14,7 @@
 # limitations under the License.
 
 PRODUCT_MAKEFILES := \
-    $(LOCAL_DIR)/lineage_harpia.mk
+    $(LOCAL_DIR)/arrow_harpia.mk
 
 COMMON_LUNCH_CHOICES := \
-    lineage_harpia-userdebug
+    arrow_harpia-userdebug
